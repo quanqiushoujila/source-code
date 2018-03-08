@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+	.row1 {
+		color: red;
+	}
+	.row2 {
+		color: blue;
+	}
+</style>
+<div id="show"></div>
+<div class="templete">
+    haha
+    <%= 233 %>
+        <%= 2 > 5 %>
+    <ul>
+        <% for (var index = 0; index < data.length;index++) { %>
+	            <li>
+		        <% if (index % 2 === 0) {%>
+		        	<span class="row1">
+		        <% }%>
+		        <% else { %>
+		        	<span class="row2">
+		        <% } %>
+                <%= data[index].title %>
+	            	</span>
+                <%= data[index].price %>
+	            </li>
+        <% }%>
+    </ul>
+</div>
+<script>
+var data = [
+	{
+		title: "商品1",
+		price: 233
+	},
+	{
+		title: "商品2",
+		price: 666
+	}
+];
+(() => {
+    var tags = document.querySelectorAll(".templete"),
+        len = tags.length;
+    while (len--) {
+        let tag = tags[len];
+        tag.innerHTML = generate(tag.innerHTML.replace(/\&gt;/g, ">").replace(/\&lt;/g, "<"));
+    }
+})();
+
+function generate(str) {
+    return str.replace(/\<\%[^\=](.*\{.*\%\>[\s\S]*\<\%[^\=].*\}.*)?\%\>/gm, function(_, $1) {
+    	$1 = $1.replace(/\%\>([^\%\>\<\%\=]*)?\<\%[^\=]/g, function (_, $1) {
+    		return $1;
+    	}).replace(/\n/g, "").replace(/\<\%\=(([^\<\=\%\>]*[\<\=\%\>]?[^\<\=\%\>])*)?\%\>/g, function (_, $$) {
+        	return "'+" + $$ + "+'";
+        });
+        var self = {
+                str: ""
+            };
+        var func = $1.split(/\<\%[^\=]|\%\>/);
+        var funcStr = "";
+        for (var index = 0, len = func.length; index < len; index++) {
+        	funcStr += index % 2 === 0 ? func[index] : "this.str += '" + func[index] + "';";
+        }
+        new Function(funcStr).bind(self)();
+        return self.str;
+    }).replace(/\<\%\=(([^\<\=\%\>]*[\<\=\%\>]?[^\<\=\%\>])*)?\%\>/g, function(_, $1) {
+        return new Function("return " + $1)();
+    })
+}
+</script>

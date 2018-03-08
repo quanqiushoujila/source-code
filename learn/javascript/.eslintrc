@@ -1,0 +1,33 @@
+/**
+ * "off" or 0 - turn the rule off
+ * "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+ * "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
+ */
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jquery": true
+  },
+  "rules": {
+    
+  },
+  "globals": {
+    "describe": false,
+    "it": false
+  },
+  "sort-imports": ["error", {
+    "ignoreCase": false,
+    "ignoreMemberSort": false,
+    "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+  }],
+  "parserOptions": {
+    "sourceType": "module",
+    "experimentalDecorators": true,
+  },
+  "extends": "airbnb",
+  // "extends": "eslint:recommended",
+  "installedESLint": true,
+  "plugins": ["react"]
+}

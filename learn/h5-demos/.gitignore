@@ -1,0 +1,20 @@
+# ignore files
+
+*.map
+*.settings
+*.project
+**/*.DS_Store
+*.DS_Store
+.DS_Store
+
+.settings
+.idea
+.vscode
+
+bower_components
+
+node_modules
+
+manifest.json
+
+.DS_Store
